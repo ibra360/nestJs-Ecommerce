@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
 
 export const OrderSchema = new mongoose.Schema({
-  user: {
+  vendor: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: 'User',
@@ -15,7 +15,7 @@ export const OrderSchema = new mongoose.Schema({
       },
       qty: {
         type: Number,
-        required: true,
+        required: false,
       },
       price: {
         type: Number,

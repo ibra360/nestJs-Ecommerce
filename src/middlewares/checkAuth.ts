@@ -10,18 +10,18 @@ export class LoggerMiddleware implements NestMiddleware {
       const token = req.headers.authorization.split(' ')[1];
       if (!token) {
         return res.status(500).send({
-          message: 'Authentication failed',
+          message: 'Authentication failed 1',
         });
       }
 
-      const decodedToken = jwt.verify(token, 'mysecret');
-      console.log(token);
+      const decodedToken = jwt.verify(token, 'AbdullahSecretKey');
+      console.log("Token",token);
       req.body.data = { userId: decodedToken.id };
       next();
     } catch (error) {
-      console.log(error.message);
+      console.log("Hi error",error.message);
       return res.status(500).send({
-        message: 'Authorization Failed',
+        message: error,
       });
       next();
     }

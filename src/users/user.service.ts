@@ -7,12 +7,12 @@ import { User } from './user.model';
 import { Order } from '../orders/order.model';
 
 import { generateToken } from '../../utils/generateToken.js';
+import { version } from 'node:punycode';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel('User') private readonly userModel: Model<User>,
-    @InjectModel('Order') private readonly orderModel: Model<Order>,
+    @InjectModel('User') private readonly userModel: Model<User>, // @InjectModel('Order') private readonly orderModel: Model<Order>,
   ) {}
 
   async createUser(res, name: string, email: string, password: string) {
@@ -44,10 +44,7 @@ export class UsersService {
 
         const result = await newUser.save();
         return res.json({
-          id: result._id,
-          email: result.email,
-          name: result.name,
-          token: generateToken(result._id),
+          result,
         });
       } catch (e) {
         throw new Error('Could not create user, please try again.');
@@ -65,18 +62,22 @@ export class UsersService {
       try {
         userExists = await this.userModel.findOne({ email });
       } catch (error) {
-        throw new Error('Login Failed!');
+        throw new Error('Error in user finding');
       }
-
+      if (!userExists) {
+        throw new Error('Invalid Email');
+      }
       let isPasswordValid;
       try {
+        console.log('PW', password, userExists);
         isPasswordValid = await bcrypt.compare(password, userExists.password);
       } catch (error) {
-        throw new Error('Login Failed!');
+        console.log('ERROR', error);
+        throw new Error('error in pw comparing');
       }
 
-      if (!userExists && !isPasswordValid) {
-        throw new Error('Login Failed!');
+      if (!isPasswordValid) {
+        throw new Error('Wrong pw');
       }
 
       req.user = {
@@ -84,8 +85,9 @@ export class UsersService {
       };
 
       return res.json({
-        id: userExists._id,
-        email: userExists.email,
+        userExists,
+        // id: userExists._id,
+        // email: userExists.email,
         token: generateToken(userExists._id),
       });
     } catch (e) {
@@ -95,32 +97,8 @@ export class UsersService {
     }
   }
 
-  async fetchOrders(res, req) {
-    const userId = req.body.data.userId;
-
-    try {
-      let user;
-      try {
-        user = await this.userModel.findById(userId).populate('orders');
-      } catch (error) {
-        throw new Error('Fetching orders failed, please try again');
-      }
-
-      if (!user) {
-        throw new Error('Fetching orders failed, please try again');
-      }
-
-      res.json({ orders: user.orders });
-    } catch (error) {
-      return res.status(500).json({
-        messge: error.message,
-      });
-    }
-  }
-
   async fetchProducts(res, req) {
     const userId = req.body.data.userId;
-
     try {
       let user;
       try {
@@ -128,11 +106,9 @@ export class UsersService {
       } catch (error) {
         throw new Error('Fetching products failed, please try again');
       }
-
       if (!user) {
         throw new Error('Fetching products failed, please try again');
       }
-
       res.json({ products: user.products });
     } catch (error) {
       return res.status(500).json({

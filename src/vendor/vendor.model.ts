@@ -1,22 +1,22 @@
 import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
 
-export const UserSchema = new mongoose.Schema({
+export const VendorSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  products: [
+  orders: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product',
+      ref: 'Order',
     },
   ],
 });
 
-export interface User extends Document {
+export interface Vendor extends Document {
   id: string;
   name: string;
   email: string;
   password: string;
-  products: [mongoose.ObjectId];
+  orders: [mongoose.ObjectId];
 }

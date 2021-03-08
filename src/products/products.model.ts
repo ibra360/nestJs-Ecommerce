@@ -5,8 +5,6 @@ export const ProductSchema = new mongoose.Schema({
   name: String,
   price: Number,
   description: String,
-  reviews: [Object],
-  totalReviews: Number,
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

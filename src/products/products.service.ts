@@ -99,9 +99,8 @@ export class ProductsService {
       const product = await newProduct.save();
       user.products.push(product._id);
       await user.save();
-      res.json({
-        id: product._id,
-        author: product.author,
+      res.json({ 
+        product,       
       });
     } catch (error) {
       res.status(500).send({

@@ -11,6 +11,7 @@ import { LoggerMiddleware } from './middlewares/checkAuth';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/user.module';
+import { VendorsModule } from './vendor/vendor.module';
 import { ProductsModule } from './products/products.module';
 import { OrderModule } from './orders/order.module';
 
@@ -18,10 +19,14 @@ import { OrderModule } from './orders/order.module';
   imports: [
     ConfigModule.forRoot(),
     UsersModule,
+    VendorsModule,
     ProductsModule,
     OrderModule,
+    // MongooseModule.forRoot(
+    //   `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@ecommerce-backend.4zh4j.mongodb.net/store?retryWrites=true&w=majority`,
+    // ),
     MongooseModule.forRoot(
-      `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@ecommerce-backend.4zh4j.mongodb.net/store?retryWrites=true&w=majority`,
+      process.env.MDB_URL
     ),
   ],
   controllers: [AppController],

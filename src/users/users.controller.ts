@@ -15,14 +15,12 @@ import { Response, Request } from 'express';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
-  @Get('orders')
-  async fetchUserOrders(@Res() res: Response, @Req() req: Request) {
-    await this.usersService.fetchOrders(res, req);
-  }
+  
   @Get('products')
   async fetchUserProducts(@Res() res: Response, @Req() req: Request) {
     await this.usersService.fetchProducts(res, req);
   }
+
   @Post('signup')
   async createUser(
     @Body('name') userName: string,
