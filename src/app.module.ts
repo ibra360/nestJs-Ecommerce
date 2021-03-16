@@ -12,7 +12,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/user.module';
 import { VendorsModule } from './vendor/vendor.module';
-import { ProductsModule } from './products/products.module';
+import { FoodItemsModule } from './foodItems/foodItems.module';
 import { OrderModule } from './orders/order.module';
 
 @Module({
@@ -20,7 +20,7 @@ import { OrderModule } from './orders/order.module';
     ConfigModule.forRoot(),
     UsersModule,
     VendorsModule,
-    ProductsModule,
+    FoodItemsModule,
     OrderModule,
     // MongooseModule.forRoot(
     //   `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@ecommerce-backend.4zh4j.mongodb.net/store?retryWrites=true&w=majority`,
@@ -37,13 +37,13 @@ export class AppModule implements NestModule {
     consumer
       .apply(LoggerMiddleware)
       .forRoutes(
-        { path: '/products/create', method: RequestMethod.POST },
-        { path: '/products/review', method: RequestMethod.POST },
-        { path: '/products/:pid', method: RequestMethod.DELETE },
+        { path: '/foodItems/create', method: RequestMethod.POST },
+        { path: '/foodItems/review', method: RequestMethod.POST },
+        { path: '/foodItems/:pid', method: RequestMethod.DELETE },
         { path: '/order/create', method: RequestMethod.POST },
         { path: '/order/:oid', method: RequestMethod.DELETE },
         { path: '/users/orders', method: RequestMethod.GET },
-        { path: '/users/products', method: RequestMethod.GET },
+        { path: '/users/foodItems', method: RequestMethod.GET },
       );
   }
 }

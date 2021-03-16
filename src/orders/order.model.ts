@@ -7,12 +7,14 @@ export const OrderSchema = new mongoose.Schema({
     required: true,
     ref: 'User',
   },
+
   orderItems: [
     {
       name: {
         type: String,
         required: true,
       },
+      OrderStatus: { enum: ['cooking', 'omv', 'Delivered'], required: false },
       qty: {
         type: Number,
         required: false,
@@ -21,10 +23,10 @@ export const OrderSchema = new mongoose.Schema({
         type: Number,
         required: true,
       },
-      product: {
+      foodItem: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'Product',
+        ref: 'FoodItem',
       },
     },
   ],
@@ -37,7 +39,7 @@ export interface Order extends Document {
       name: string;
       qty: number;
       price: number;
-      product: mongoose.ObjectId;
+      foodItem: mongoose.ObjectId;
     },
   ];
 }

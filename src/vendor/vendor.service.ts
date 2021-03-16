@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 const bcrypt = require('bcryptjs');
 
 import { Vendor } from './vendor.model';
-import { Order } from '../orders/order.model';
+import { FoodItem } from '../foodItems/foodItems.model';
 
 import { generateToken } from '../../utils/generateToken.js';
 
@@ -12,7 +12,7 @@ import { generateToken } from '../../utils/generateToken.js';
 export class VendorsService {
   constructor(
     @InjectModel('Vendor') private readonly vendorModel: Model<Vendor>,
-    // @InjectModel('Order') private readonly orderModel: Model<Order>,
+    // @InjectModel('FoodItem') private readonly foodItemModel: Model<FoodItem>,
   ) {}
 
   async createVendor(res, name: string, email: string, password: string) {
@@ -100,22 +100,22 @@ export class VendorsService {
     }
   }
 
-  async fetchOrders(res, req) {
+  async fetchFoodItems(res, req) {
     const vendorId = req.body.data.vendorId;
 
     try {
       let vendor;
       try {
-        vendor = await this.vendorModel.findById(vendorId).populate('orders');
+        vendor = await this.vendorModel.findById(vendorId).populate('foodItems');
       } catch (error) {
-        throw new Error('Fetching orders failed, please try again');
+        throw new Error('Fetching foodItems failed, please try again');
       }
 
       if (!vendor) {
-        throw new Error('Fetching orders failed, please try again');
+        throw new Error('Fetching foodItems failed, please try again');
       }
 
-      res.json({ orders: vendor.orders });
+      res.json({ foodItems: vendor.foodItems });
     } catch (error) {
       return res.status(500).json({
         messge: error.message,

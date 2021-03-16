@@ -97,19 +97,19 @@ export class UsersService {
     }
   }
 
-  async fetchProducts(res, req) {
+  async fetchOrders(res, req) {
     const userId = req.body.data.userId;
     try {
       let user;
       try {
-        user = await this.userModel.findById(userId).populate('products');
+        user = await this.userModel.findById(userId).populate('orders');
       } catch (error) {
-        throw new Error('Fetching products failed, please try again');
+        throw new Error('Fetching orders failed, please try again');
       }
       if (!user) {
-        throw new Error('Fetching products failed, please try again');
+        throw new Error('Fetching orders failed, please try again');
       }
-      res.json({ products: user.products });
+      res.json({ orders: user.orders });
     } catch (error) {
       return res.status(500).json({
         messge: error.message,

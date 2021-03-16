@@ -16,12 +16,12 @@ import { Response, Request } from 'express';
 export class VendorsController {
   constructor(private readonly vendorsService: VendorsService) {}
   @Get('orders')
-  async fetchVendorOrders(@Res() res: Response, @Req() req: Request) {
-    await this.vendorsService.fetchOrders(res, req);
+  async fetchVendorFoodItems(@Res() res: Response, @Req() req: Request) {
+    await this.vendorsService.fetchFoodItems(res, req);
   }
-  // @Get('products')
-  // async fetchVendorProducts(@Res() res: Response, @Req() req: Request) {
-  //   await this.vendorsService.fetchProducts(res, req);
+  // @Get('foodItems')
+  // async fetchVendorFoodItems(@Res() res: Response, @Req() req: Request) {
+  //   await this.vendorsService.fetchFoodItems(res, req);
   // }
   @Post('signup')
   async createVendor(

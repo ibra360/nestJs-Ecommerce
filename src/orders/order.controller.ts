@@ -8,6 +8,7 @@ import {
   Put,
   Delete,
   Res,
+  Patch,
   Req,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
@@ -35,6 +36,22 @@ export class OrderController {
   ) {
     try {
       await this.orderService.addOrders(orderItems, req, res);
+    } catch (error) {
+      res.send({
+        message: error.message,
+      });
+    }
+  }
+
+  @Patch(':id')
+  async changeToCart(
+    @Body('orderItems') orderItems: [],
+    @Param('id') id:string,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    try {
+      await this.orderService.updateOrders(orderItems,id, req, res);
     } catch (error) {
       res.send({
         message: error.message,

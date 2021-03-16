@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
 
-export const ProductSchema = new mongoose.Schema({
+export const FoodItemSchema = new mongoose.Schema({
   name: String,
   price: Number,
   description: String,
@@ -11,11 +11,9 @@ export const ProductSchema = new mongoose.Schema({
   },
 });
 
-export interface Product extends Document {
+export interface FoodItem extends Document {
   name: string;
   price: number;
   description: string;
-  reviews: [object];
-  totalReviews: number;
   author: mongoose.ObjectId;
 }

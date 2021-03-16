@@ -16,9 +16,9 @@ import { Response, Request } from 'express';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   
-  @Get('products')
-  async fetchUserProducts(@Res() res: Response, @Req() req: Request) {
-    await this.usersService.fetchProducts(res, req);
+  @Get('orders')
+  async fetchUserOrders(@Res() res: Response, @Req() req: Request) {
+    await this.usersService.fetchOrders(res, req);
   }
 
   @Post('signup')

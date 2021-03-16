@@ -5,10 +5,10 @@ export const VendorSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  orders: [
+  foodItems: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Order',
+      ref: 'FoodItem',
     },
   ],
 });
@@ -17,6 +17,6 @@ export interface Vendor extends Document {
   id: string;
   name: string;
   email: string;
+  foodItems: [mongoose.ObjectId];
   password: string;
-  orders: [mongoose.ObjectId];
 }

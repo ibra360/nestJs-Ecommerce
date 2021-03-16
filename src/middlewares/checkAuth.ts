@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 export class LoggerMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log('mddle');
+      console.log('middleware chal rahy');
       const token = req.headers.authorization.split(' ')[1];
       if (!token) {
         return res.status(500).send({
@@ -15,7 +15,7 @@ export class LoggerMiddleware implements NestMiddleware {
       }
 
       const decodedToken = jwt.verify(token, 'AbdullahSecretKey');
-      console.log("Token",token);
+      console.log('Token',token);
       req.body.data = { userId: decodedToken.id };
       next();
     } catch (error) {
